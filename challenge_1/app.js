@@ -6,9 +6,9 @@ var board = {
      board: [
           ["","",""],
           ["","",""],
-          ['','',' '],
+          ['','',''],
       ],
-
+    count: 0,
   currentPlayer: "player1",
   players: {
     key: {
@@ -27,10 +27,29 @@ var board = {
 }
 
 
+var boardRender = function(){
+  // delete board.board;
+  var board = Array.from(document.getElementsByClassName("board"))
+  board[0].innerHTML =`
+  <div class="flex row"> 
+  <div id="00"class="flex row square square-a"></div>
+  <div id="01"class="flex row square square-b"></div>
+  <div id="02"class="flex row square square-c"></div>
+</div>
+<div class="flex row"> 
+  <div id="10"class="flex flex-row square square-d"></div>
+  <div id="11"class="flex flex-row square square-e"></div>
+  <div id="12"class="flex flex-row square square-f"></div>
+</div>
+<div class="flex row"> 
+  <div id="20"class="flex flex-row square square-g"></div>
+  <div id="21"class="flex flex-row square square-h"></div>
+  <div id="22"class="flex flex-row square square-i"></div>
+</div>`
+
+};
 
 
-
-var rowLooper = [board.board.row1, board.board.row2, board.board.row3,]
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - -
 // - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -38,6 +57,42 @@ var rowLooper = [board.board.row1, board.board.row2, board.board.row3,]
 
 
 
+var buttonsListner = function(){
+
+  var reset = Array.from(document.getElementsByClassName('reset'));
+  console.log(reset[0])
+    reset.map(elem => {
+
+      elem.onclick = function(e) {
+
+        boardRender();
+        headerRender({ lastWinner: board.currentPlayer})
+        sliced = board.board.slice()
+        board.board.map(row => {
+          row.pop()
+          row.pop()
+          row.pop()
+        })
+        board.board.map(row => {
+          row.push("")
+          row.push("")
+          row.push("")
+        })
+        board.count = 0;
+        squareListner(board)
+
+      } 
+   })
+  
+  
+}
+
+var tieCatch = function(count){
+  if(count === 9){
+    squareListner(board, true) //turns all board click handlers off
+    headerRender({'tie': true})
+  }
+}
 
 var playerToggle = function(obj){
 if(obj.currentPlayer === "player1") {
@@ -48,11 +103,19 @@ if(obj.currentPlayer === "player1") {
 }
 
 var headerRender = function(input) {
+  if(Object.keys(input)[0] === 'lastWinner'){
+    var header = document.getElementsByClassName("title")
+    header[0].innerHTML = `<h1 style="color: red">Player ${board.players.key[input.lastWinner].toUpperCase()} You're up first because youre awesome!</h1>`
+  }
 
   if(input) {
 if(Object.keys(input)[0] ===  "win"){
   var header = document.getElementsByClassName("title")
   header[0].innerHTML = `<h1 style="color: red">Player ${input.win.toUpperCase()} WINS</h1>`
+}
+if(Object.keys(input)[0] === 'tie'){
+  var header = document.getElementsByClassName("title")
+  header[0].innerHTML = `<h1 style="color: red">Tic Tac Toe is almost always Tied. Reset to play again!</h1>`
 }
   }
 
@@ -67,44 +130,52 @@ var scoreRender = function(){
   //optional
 }
 
-var squareListner = function(board){
-  var squareNodes = Array.from(document.getElementsByClassName("square"));
+var squareListner = function(board, off){
+  if(off){
+    var squareNodes = Array.from(document.getElementsByClassName("square"));
   squareNodes.map(elem => {
-
-    elem.onclick = function(e) {
-      var resultsBoard = board.board.slice()
-      var clicked = elem.id
-      
-      var {currentPlayer, players} = board;
-      var playerLetter = players.key[currentPlayer];
-      console.log("player letter is ", typeof playerLetter)
-      console.log("****** spaceKey = ", clicked)
-      var split = clicked.split("")
-    
-      resultsBoard[split[0]][split[1]] = playerLetter;
-     
-      console.log(JSON.stringify( resultsBoard));
-      board.board = resultsBoard;
-      elem.onclick = null;
-
-      elem.innerHTML = `<img class="selected-${playerLetter}" src = ${players.src[currentPlayer]} / >`
-      if(boardChecker(board.board, playerLetter)){
-        headerRender({win: playerLetter})
-        players.score[currentPlayer] ++ 
-      }
-      playerToggle(board);
-    }
+    elem.onclick = null;
+    return squareNodes;
   })
+  } else {
+      var squareNodes = Array.from(document.getElementsByClassName("square"));
+      squareNodes.map(elem => {
+
+        elem.onclick = function(e) {
+          console.log(board.board)
+          var resultsBoard = board.board.slice()
+          var clicked = elem.id
+          
+          var {currentPlayer, players} = board;
+          var playerLetter = players.key[currentPlayer];
+
+          var split = clicked.split("")
+        
+          resultsBoard[split[0]][split[1]] = playerLetter;
+        
+    
+          board.board = resultsBoard;
+          elem.onclick = null;
+
+          elem.innerHTML = `<img class="selected-${playerLetter}" src = ${players.src[currentPlayer]} / >`
+          if(boardChecker(board.board, playerLetter)){
+            headerRender({win: playerLetter})
+            players.score[currentPlayer] ++ 
+            board.currentPlayer = currentPlayer;
+            squareListner(board, true)
+          } else {
+            board.count++
+            tieCatch(board.count)
+          playerToggle(board);
+          }
+        }
+      })
+}
   }
 
 
 
 
-
-var buttonsListner = function(){
-
-
-}
 
 
 
@@ -167,11 +238,11 @@ var colChecker = function(board, col, player){
 var diagChecker = function(board, player){
   playerThree = player+player+player
   if((board[0][0] + board[1][1] + board[2][2]) === playerThree) {
-    console.log("majorDiagnal present")
+    
     return true
   }
   if((board[2][0] + board[1][1]  + board[0][2])=== playerThree) {
-    console.log("minordiag present")
+   
     return true
   }
   return false
@@ -182,7 +253,10 @@ var diagChecker = function(board, player){
 
 var starter = function () {
 console.log('starter is starting')
+boardRender();
 squareListner(board)
+buttonsListner()
+
 
 }
 starter()
