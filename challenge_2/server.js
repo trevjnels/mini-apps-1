@@ -21,15 +21,15 @@ app.post('/', (req, res) => {
       var jsonObj = req.body
       var CSVstringPath = jsonToCSV(jsonObj)
 
-      fs.readFile(path.join(__dirname + CSVstringPath), {encoding: 'utf8'}, (err, data)=>{
-        if(err){
-          console.log("THERE WAS AN ERROR serverSide", err)
-        } else {
-          console.log(data, " * * * *  ** * * *  ** * * *  ** * * *  ** * * *  *data")
-        }
-        res.status(200).send(`${data}`)
+      // fs.readFile(path.join(__dirname + CSVstringPath), {encoding: 'utf8'}, (err, data)=>{
+      //   if(err){
+      //     console.log("THERE WAS AN ERROR serverSide", err)
+      //   } else {
+      //     console.log(data, " * * * *  ** * * *  ** * * *  ** * * *  ** * * *  *data")
+      //   }
+        res.status(200).sendFile(path.join(__dirname + CSVstringPath))
 
-      })
+      // })
       
       // console.log("post request received")
     }

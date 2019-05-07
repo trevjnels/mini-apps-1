@@ -77,7 +77,14 @@ var formListner = () => {
           body: newData,
           headers: {"Content-Type": "application/json"},
         }).then(res => {
-          console.log(res)
+          console.log(  res.blob()
+          .then(info => {
+            // var element = document.createElement()
+            // element.setAttribute("href", "data:text/plain;charset=utf-8", encodeURIComponent(res.bl)
+            var objectURL = URL.createObjectURL(info)
+            var download = document.querySelector("a");
+            download.href = objectURL
+          }))
         }).catch(anythingElse => {
           console.log("what is"  , anythingElse)
         })
