@@ -1,0 +1,24 @@
+{
+  "name": "checkout",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon server.js",
+    "babel": "./node_modules/.bin/babel client --out-dir public --presets @babel/preset-react --source-maps inline --watch"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@babel/cli": "^7.4.4",
+    "@babel/core": "^7.4.4",
+    "@babel/preset-react": "^7.0.0",
+    "babel": "^6.23.0",
+    "body-parser": "^1.19.0",
+    "chai": "^4.2.0",
+    "mocha": "^6.1.4",
+    "sequelize": "^5.8.5",
+    "sqlite3": "^4.0.7"
+  }
+}
