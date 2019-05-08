@@ -1,11 +1,15 @@
 
 // const https = require('https')
+var form = document.getElementById('form')
 
 
-//take in text input for JSON and do not disrupt the auto refresh while still getting the post request out there
 
-var newData = JSON.stringify({
-  "firstName": "Joshie",
+var state = {
+  objURL: ""
+}
+
+var obj = {
+  "firstName": "ahhh",
   "lastName": "Wyattson",
   "county": "San Mateo",
   "city": "San Mateo",
@@ -50,75 +54,58 @@ var newData = JSON.stringify({
     "children": []
   }
 ]
-})
+}
 
-var options = {
-  post: {
-    hostname: '',
-    port: 3000,
-    path: '/',
+
+var fetcher = function (form) {
+  fetch('/', {
     method: 'POST',
-    headers: {
-      'Content-Type': 'application/json'
+    body:  form,// form.value,
+    headers: {"Content-Type": "application/json"},
+  }).then(res => {
+        return res.blob()
+  })
+  .then(info => {
+    // var element = document.createElement()
+    // element.setAttribute("href", "data:text/plain;charset=utf-8", encodeURIComponent(res.bl)
+  var objectURL = URL.createObjectURL(info)
+    // var download = document.querySelector("a");
+    // delete state.objURL;
+  state.objURL = objectURL
+   bodyRender()
+  }).catch(anythingElse => {
+    console.log("what is"  , anythingElse)
+  })
+}
+
+
+//take in text input for JSON and do not disrupt the auto refresh while still getting the post request out 
+var formListner = () => {
+  
+
+form.onsubmit = function(e){
+  // e.preventDefault()
+    var x = document.forms["myForm"]["json-input"].value
+
+      console.log("FORM VALUE: ", x)
+      // setinterval(2000)
+      fetcher(x)
     }
+}
+
+var bodyRender = function () { 
+  var body = document.querySelector("body")
+  if(state.objURL.length){
+  var link =  document.getElementById("link")
+  link.innerHTML = `<a href="${state.objURL}" class="download">download your results here!</a>`
   }
 }
-var formListner = () => {
 
-  console.log("Yo" , newData)
-    var form = Array.from(document.getElementsByClassName('jToC'))
-    var elem =  form[0]
-
-    elem.onclick = function(){
-      // var jsonD = JSON.stringify(sampleJSON)
-      fetch('/', {
-      
-          method: 'POST',
-          body: newData,
-          headers: {"Content-Type": "application/json"},
-        }).then(res => {
-          console.log(  res.blob()
-          .then(info => {
-            // var element = document.createElement()
-            // element.setAttribute("href", "data:text/plain;charset=utf-8", encodeURIComponent(res.bl)
-            var objectURL = URL.createObjectURL(info)
-            var download = document.querySelector("a");
-            download.href = objectURL
-          }))
-        }).catch(anythingElse => {
-          console.log("what is"  , anythingElse)
-        })
-    }
-}
-formListner()
-// form[0].onclick(function(){
-// fetch('/', {
-//   headers: {"Content-Type": "application/json; charset=utf8"},
-//   method: 'POST',
-//   body: JSON.stringify(sampleJSON)
-// }).then(res => {
-//   console.log(res)
-// }).catch(anythingElse => {
-//   console.log("what is"  , anythingElse)
-// })
-// })
+var initializer = function (){
+  bodyRender()
+  formListner()
+} 
 
 
 
-
-
-
-
-//will receive CSV formatted result 
-
-
-
-
-//page relodes upon receipt with csv file and input feild, ready to go. No refresh tho.
-
-
-
-
-
-//eventually add a link to download the csv file
-//can use jquery to manipulate dom now and ajax etc
+initializer()

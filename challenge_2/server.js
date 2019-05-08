@@ -11,27 +11,15 @@ var num = 0;
 app.use(express.static('client'));
 app.use(bodyParser.urlencoded({extended: true }))
 app.use(bodyParser.json())
-app.get('/', (req, res) => res.status(200).sendFile("/client/index.html"))
+// app.get('/', (req, res) => res.status(200).sendFile("/client/index.html"))
 
 app.post('/', (req, res) => {
-
   res.header("Access-Control-Allow-Origin", "*");
   res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
   console.log("request is - - - - -- - -- - -- - - - ", req.body)
       var jsonObj = req.body
       var CSVstringPath = jsonToCSV(jsonObj)
-
-      // fs.readFile(path.join(__dirname + CSVstringPath), {encoding: 'utf8'}, (err, data)=>{
-      //   if(err){
-      //     console.log("THERE WAS AN ERROR serverSide", err)
-      //   } else {
-      //     console.log(data, " * * * *  ** * * *  ** * * *  ** * * *  ** * * *  *data")
-      //   }
-        res.status(200).sendFile(path.join(__dirname + CSVstringPath))
-
-      // })
-      
-      // console.log("post request received")
+      res.status(200).sendFile(path.join(__dirname + CSVstringPath))
     }
 )
 app.listen(port, () => {
@@ -39,10 +27,34 @@ app.listen(port, () => {
 })
 
 
+var jsonToCSV = function(data) {
+  num++
+  var keys = Object.keys(data);
+  keys.pop()
+  var joinedK = keys.join(",")
+  fs.writeFileSync(`./file${num}`, joinedK)
 
-//receive post requests and return data like the csv below
+  var recurser = function(obj) {
+    var values = keys.map(key => {
+      return obj[key];
+    })
+   //removes children before string parsing
+    var joinedV = "\n" + values.join(",")
+    // console.log("keys are ", joinedV)
+    fs.appendFileSync(`./file${num}`, joinedV)
+    if(obj.children.length){
+      obj.children.map(child => {
+        recurser(child)
+      })
+    }
+  }
+  recurser(data)
+ return `/file${num}`;
+}
 
-//post may be in URL weirdly?
+
+
+//receive post requests and return data like the csv belo
 
 var sample= {
     "firstName": "Joshie",
@@ -93,30 +105,6 @@ var sample= {
 };
 
 
-var jsonToCSV = function(data) {
-  num++
-  var keys = Object.keys(data);
-  keys.pop()
-  var joinedK = keys.join(",")
-  fs.writeFileSync(`./file${num}`, joinedK)
-
-  var recurser = function(obj) {
-    var values = keys.map(key => {
-      return obj[key];
-    })
-   //removes children before string parsing
-    var joinedV = "\n" + values.join(",")
-    // console.log("keys are ", joinedV)
-    fs.appendFileSync(`./file${num}`, joinedV)
-    if(obj.children.length){
-      obj.children.map(child => {
-        recurser(child)
-      })
-    }
-  }
-  recurser(data)
- return `/file${num}`;
-}
 
 
 var sampleCSV = 
