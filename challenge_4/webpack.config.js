@@ -1,11 +1,11 @@
 module.exports = {
   entry: __dirname + '/client/components/app.jsx',
-  module : {
-    rules : [
-      {
+  module: {
+    rules: [
+      { 
         test: [/\.jsx$/],
-        exclued: /node_modules/,
-        use : {
+        exclude: /node_modules/,
+        use: {
           loader: 'babel-loader',
           options: {
             presets: ['@babel/preset-react', '@babel/preset-env']
@@ -14,10 +14,8 @@ module.exports = {
       }
     ]
   },
-  output:{
+   output: {
     filename: 'bundle.js',
-    path: __dirname + '/client/dist'
+    path: __dirname + '/public'
   }
-
-
-}
+};

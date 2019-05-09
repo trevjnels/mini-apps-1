@@ -1,7 +1,8 @@
 const React = require('react')
 const ReactDOM = require('react-dom')
+const Board = require('./board.jsx')
 
 ReactDOM.render(
-  <h1>Howdy world!!!</h1>,
+  <Board />,
   document.getElementById('root')
 )

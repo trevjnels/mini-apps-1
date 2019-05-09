@@ -1,0 +1,43 @@
+.flex {
+  display: flex;
+  align-items: center;
+}
+
+.flex-row {
+  justify-content: space-evenly;
+  flex-direction: row;
+}
+.flex-col {
+  justify-content: space-evenly;
+  flex-direction: column;
+}
+
+.row {
+  width: 99%;
+  height: 14%;
+}
+
+.square {
+  width: 10vw;
+  height: 10vw;
+  border: yellow solid 3px;
+  border-radius: 100%;
+  background-color: red;
+}
+.board {
+  width: 90vw;
+  height: 80vw;
+  border: #6495ed solid 8px;
+  background-color: #6495ed;
+}
+
+.red {
+  background-color: red;
+}
+.black {
+  background-color: black;
+}
+
+h3 {
+  color: red;
+}
