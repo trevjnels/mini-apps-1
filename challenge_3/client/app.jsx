@@ -5,7 +5,7 @@ class App extends React.Component {
     super(props)
 
     this.state = {
-      currentStep: 1, // Default is Step 0
+      currentStep: 0, // Default is Step 0
       email: '',
       username: '',
       password: '', 
@@ -22,8 +22,61 @@ class App extends React.Component {
     }
     this.handleChange = this.handleChange.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this)
-    
+    this._next = this._next.bind(this)
+    this._prev = this._prev.bind(this)
+;
+  // componentDidUpdate() {
+  //   console.log('my componenet did update just now ')
   }
+
+  _next() {
+    let currentStep = this.state.currentStep;
+
+    currentStep = currentStep >= 2 ? 3 : currentStep + 1;
+    this.setState({
+      currentStep: currentStep
+    });
+  };
+
+  _prev() {
+    let currentStep = this.state.currentStep;
+
+    currentStep = currentStep <= 1 ? 1 : currentStep - 1;
+    this.setState({
+      currentStep: currentStep
+    })
+  };
+
+  get previousButton() {
+    let currentStep = this.state.currentStep;
+
+    if(currentStep !== 1) {
+      return (
+        <button
+          className="btn btn-secondary"
+          type="button" onClick={this._prev}>
+        Previous
+        </button>
+      )
+    }
+    return null;
+  }
+
+  get nextButton() {
+    let currentStep = this.state.currentStep;
+
+    if(currentStep < 3) {
+      return(
+        <button
+          className="btn btn-primary flaot-right"
+          type="button" onClick={this._next}>
+        Next
+        </button>
+      )
+    }
+    return null;
+  }
+
 
   handleChange(event)  {
     const {name, value} = event.target
@@ -69,8 +122,12 @@ class MasterForm extends App {
   constructor(props) {
     super(props)
   }
+  componentDidUpdate(){
+    console.log('masterform')
+  }
+
   render(){
-    if(this.state.currentStep > 0) {
+    if(this.state.currentStep === 0) {
       console.log("- - - - - - ", this.state)
       return null
     }
@@ -227,7 +284,7 @@ class Header extends App {
 }
 
 
-ReactDOM.render(
+ReactDom.render(
   <App />,
   document.getElementById('root')
 );
