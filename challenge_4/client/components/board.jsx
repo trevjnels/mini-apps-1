@@ -10,12 +10,13 @@ class Board extends React.Component {
 
     this.state = {
       matrix: [
-        ["","","","","","","",],
-        ["","","","","","","",],
-        ["","","","","","","",],
-        ["","","","","","","",],
-        ["","","","","","","",],
-        ["","","","","","","",],
+        ["","","","","","",],
+        ["","","","","","",],
+        ["","","","","","",],
+        ["","","","","","",],
+        ["","","","","","",],
+        ["","","","","","",],
+        ["","","","","","",],
     ],
     turn: 0,
     currentPlayer: "black",
@@ -29,12 +30,13 @@ class Board extends React.Component {
 
   render(){
       return (<div className="flex flex-col board">
-      <Column id="Column1" currentPlayer={this.state.currentPlayer} column={this.state.matrix[0]}/>
-      <Column id="Column2" currentPlayer={this.state.currentPlayer} column={this.state.matrix[1]}/>
-      <Column id="Column3" currentPlayer={this.state.currentPlayer} column={this.state.matrix[2]}/>
-      <Column id="Column4" currentPlayer={this.state.currentPlayer} column={this.state.matrix[3]}/>
-      <Column id="Column5" currentPlayer={this.state.currentPlayer} column={this.state.matrix[4]}/>
-      <Column id="Column6" currentPlayer={this.state.currentPlayer} column={this.state.matrix[5]}/>
+      <Column className="column flex flex-row" num="0" id="Column1" currentPlayer={this.state.currentPlayer} column={this.state.matrix[0]}/>
+      <Column className="column flex flex-row"num="0" id="Column2" currentPlayer={this.state.currentPlayer} column={this.state.matrix[1]}/>
+      <Column className="column flex flex-row"num="0" id="Column3" currentPlayer={this.state.currentPlayer} column={this.state.matrix[2]}/>
+      <Column className="column flex flex-row"num="0" id="Column4" currentPlayer={this.state.currentPlayer} column={this.state.matrix[3]}/>
+      <Column className="column flex flex-row"num="0" id="Column5" currentPlayer={this.state.currentPlayer} column={this.state.matrix[4]}/>
+      <Column className="column flex flex-row"num="0" id="Column6" currentPlayer={this.state.currentPlayer} column={this.state.matrix[5]}/>
+      <Column className="column flex flex-row"num="0" id="Column7" currentPlayer={this.state.currentPlayer} column={this.state.matrix[6]}/>
       </div>)
   }
 }

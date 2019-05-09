@@ -12,7 +12,7 @@
   flex-direction: column;
 }
 
-.row {
+.column {
   width: 99%;
   height: 14%;
 }
@@ -20,9 +20,9 @@
 .square {
   width: 10vw;
   height: 10vw;
-  border: yellow solid 3px;
+  border: black solid 3px;
   border-radius: 100%;
-  background-color: red;
+  background-color: white;
 }
 .board {
   width: 90vw;
@@ -40,4 +40,12 @@
 
 h3 {
   color: red;
+}
+
+.board {
+  -webkit-transform: rotate(90deg);
+  -moz-transform: rotate(90deg);
+  -o-transform: rotate(90deg);
+  -ms-transform: rotate(90deg);
+  transform: rotate(90deg);
 }

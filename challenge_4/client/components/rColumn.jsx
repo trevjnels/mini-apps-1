@@ -4,9 +4,11 @@ const Square = require('./square.jsx')
 
 
 const Column = (props)=>(
+
+
 <div className="flex-row flex row">
   {props.column.map(space => {
-    return <Square />
+    return <Square  key={props.num++} stuff={props}/>
   })
   }
 
