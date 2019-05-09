@@ -1,19 +1,20 @@
 const React = require('react')
 const ReactDOM = require('react-dom')
-const square = require('./square.jsx')
+const Square = require('./square.jsx')
 
 
-class Board extends React.Component {
-  constructor(props){
-    super(props)
+const Column = (props)=>(
+<div className="flex-row flex row">
+  {props.column.map(space => {
+    return <Square />
+  })
   }
 
-  render(){
-      return (<h3>Aloha world</h3>)
-  }
-}
+</div>
+)
 
-module.exports = Board
+
+module.exports = Column
 
 // 7 wide 6 deep 
 
