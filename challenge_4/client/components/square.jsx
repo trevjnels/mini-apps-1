@@ -4,7 +4,7 @@ const React = require('react')
 // column={props.column}
 
 const Square = (props) => (
-    <div key={props.key} className={props.key+" square"}></div>
+    <div key={props.num} className={props.parent+" "+props.num+ " square" } row={props.parent}></div>
 )
 
 module.exports = Square

@@ -27,7 +27,9 @@ class Board extends React.Component {
 
   }
   handleClick(e) { 
-    console.log(e)
+    console.log(e.target.className)
+    var row = e.target.className.slice(6,7) -1
+    var square = 'something'
     // console.log("olumn clicked" e)
     // figure out which column was clicked
     // take in which palyer is up and credit them  in the matrix 
@@ -49,19 +51,19 @@ class Board extends React.Component {
 
   render(){
       return (<div className="flex flex-col board">
-      <Column className="column flex flex-row" num="0" id="Column1" click={this.handleClick}spaceCounter={this.state.counter} currentPlayer={this.state.currentPlayer} key="0" column={this.state.matrix[0]}/> {/*right1 */}
+      <Column className="column flex flex-row" num="0" id="Column1" click={this.handleClick} spaceCounter={this.state.spaceId} currentPlayer={this.state.currentPlayer} key="0" column={this.state.matrix[0]}/> {/*right1 */}
 
-      <Column className="column flex flex-row"num="0" id="Column2" currentPlayer={this.state.currentPlayer} key="1" column={this.state.matrix[1]}/> {/*right2 */}
+      <Column className="column flex flex-row"num="0" id="Column2" click={this.handleClick} spaceCounter={this.state.spaceId}  currentPlayer={this.state.currentPlayer} key="1" column={this.state.matrix[1]}/> {/*right2 */}
 
-      <Column className="column flex flex-row"num="0" id="Column3" currentPlayer={this.state.currentPlayer} key="2" column={this.state.matrix[2]}/> {/*right3 */}
+      <Column className="column flex flex-row"num="0" id="Column3"  click={this.handleClick} spaceCounter={this.state.spaceId} currentPlayer={this.state.currentPlayer} key="2" column={this.state.matrix[2]}/> {/*right3 */}
 
-      <Column className="column flex flex-row"num="0" id="Column4" currentPlayer={this.state.currentPlayer} key="3" column={this.state.matrix[3]}/> {/*center */}
+      <Column className="column flex flex-row"num="0" id="Column4" click={this.handleClick} spaceCounter={this.state.spaceId}  currentPlayer={this.state.currentPlayer} key="3" column={this.state.matrix[3]}/> {/*center */}
 
-      <Column className="column flex flex-row"num="0" id="Column5" currentPlayer={this.state.currentPlayer} key="4" column={this.state.matrix[4]}/>{/* left3 */}
+      <Column className="column flex flex-row"num="0" id="Column5"  click={this.handleClick} spaceCounter={this.state.spaceId} currentPlayer={this.state.currentPlayer} key="4" column={this.state.matrix[4]}/>{/* left3 */}
 
-      <Column className="column flex flex-row"num="0" id="Column6" currentPlayer={this.state.currentPlayer} key="5" column={this.state.matrix[5]}/>{/* left2 */}
+      <Column className="column flex flex-row"num="0" id="Column6"  click={this.handleClick} spaceCounter={this.state.spaceId} currentPlayer={this.state.currentPlayer} key="5" column={this.state.matrix[5]}/>{/* left2 */}
 
-      <Column className="column flex flex-row"num="0" id="Column7"  currentPlayer={this.state.currentPlayer} key="6" column={this.state.matrix[6]}/>{/* left1 */}
+      <Column className="column flex flex-row"num="0" id="Column7"  click={this.handleClick} spaceCounter={this.state.spaceId}  currentPlayer={this.state.currentPlayer} key="6" column={this.state.matrix[6]}/>{/* left1 */}
 
       </div>)
   }

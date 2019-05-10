@@ -1,14 +1,15 @@
 const React = require('react')
 const ReactDOM = require('react-dom')
 const Square = require('./square.jsx')
-
+var num = -1
 
 const Column = (props)=>(
 
 
-<div name="column" onclick={props.click} className={props.id+ " flex-row flex row"}>
+<div name="column" onClick={props.click} className={props.id+ " flex-row flex row"}>
   {props.column.map(space => {
-    return <Square  key={props.spaceCounter} stuff={props}/>
+    num += 1
+    return <Square parent={props.id} num={num} key={props.id + " " + num} stuff={props}/>
   })
   }
 
