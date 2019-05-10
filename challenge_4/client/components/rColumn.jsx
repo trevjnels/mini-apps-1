@@ -6,9 +6,9 @@ const Square = require('./square.jsx')
 const Column = (props)=>(
 
 
-<div className="flex-row flex row">
+<div name="column" onclick={props.click} className={props.id+ " flex-row flex row"}>
   {props.column.map(space => {
-    return <Square  key={props.num++} stuff={props}/>
+    return <Square  key={props.spaceCounter} stuff={props}/>
   })
   }
 
