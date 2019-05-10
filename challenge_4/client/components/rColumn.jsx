@@ -7,9 +7,12 @@ const Column = (props)=>(
 
 
 <div name="column" onClick={props.click} className={props.id+ " flex-row flex row"}>
-  {props.column.map(space => {
+  {props.column.map((space, index) => {
+    console.log("space is " ,space)
+    var color = space
+    console.log(color)
     num += 1
-    return <Square parent={props.id} num={num} key={props.id + " " + num} stuff={props}/>
+    return <Square parent={props.id} num={num} key={props.id + " " + num} stuff={props} color={color}/>
   })
   }
 

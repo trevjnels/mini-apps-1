@@ -27,9 +27,20 @@ class Board extends React.Component {
 
   }
   handleClick(e) { 
-    console.log(e.target.className)
     var row = e.target.className.slice(6,7) -1
-    var square = 'something'
+    var square = e.target.className.slice(8,10).trim()
+    var sliced = this.state.matrix.slice();
+    console.log(sliced[row])
+    var emptySpace = (sliced[row].lastIndexOf(""))
+    sliced[row].splice(emptySpace, 1, this.state.currentPlayer)
+    var nextPlayer = this.state.currentPlayer === "red" ? "black": "red"
+    this.setState({
+     matrix: sliced,
+     currentPlayer: nextPlayer
+    })
+
+    console.log(this.state.matrix)
+    
     // console.log("olumn clicked" e)
     // figure out which column was clicked
     // take in which palyer is up and credit them  in the matrix 
