@@ -28,9 +28,11 @@ class Board extends React.Component {
   }
   handleClick(e) { 
     var row = e.target.className.slice(6,7) -1
+    if(this.state.matrix[row].indexOf("") !==-1) {
     var square = e.target.className.slice(8,10).trim()
     var sliced = this.state.matrix.slice();
-    console.log(sliced[row])
+    var player = this.state.currentPlayer
+    // console.log(sliced[row])
     var emptySpace = (sliced[row].lastIndexOf(""))
     sliced[row].splice(emptySpace, 1, this.state.currentPlayer)
     var nextPlayer = this.state.currentPlayer === "red" ? "black": "red"
@@ -38,9 +40,33 @@ class Board extends React.Component {
      matrix: sliced,
      currentPlayer: nextPlayer
     })
-
-    console.log(this.state.matrix)
+    var winner = this.rowChecker(this.state.matrix[row])
+      if(winner) {
+        console.log("winner: ", winner)
+      }
+      // var colWinner = this.colChecker(this.state.matrix)
+      // if(colWinner) {
+      //   console.log("winner: ", colWinner)
+      // }
+      // var majorwinner = this.majorDiagChecker(this.state.matrix)
+      // if(majorwinner) {
+      //   console.log("winner: ", majorwinner)
+      // }
     
+      // var minorwinner = this.minorDiagChecker(this.state.matrix)
+      // if(minorwinner) {
+      //   console.log("winner: ", minorwinner)
+      // }
+    
+    
+
+
+    // console.log(this.state.matrix)
+  }  else {
+    alert("try another row, wiseguy")
+  }
+ 
+ 
     // console.log("olumn clicked" e)
     // figure out which column was clicked
     // take in which palyer is up and credit them  in the matrix 
@@ -59,7 +85,24 @@ class Board extends React.Component {
   // for(let i = 0; i<=6; i++){
   //       //render 6 rows?
   // }
+  rowChecker(row) {
+    for(let i = 0; i< row.length; i++) {
+      var space0 = row[i];
+      var space2 = row[i+1]
+      var space3 = row[i+2]
+      var space4 = row[i+3]
+      
 
+
+   
+      if(space0 === space2 && space2 === space3 && space3 ===space4){
+        if(space0 === "black" || space0 === "red"){
+         return space0;
+        }
+      }
+    }
+    return false;
+  }
   render(){
       return (<div className="flex flex-col board">
       <Column className="column flex flex-row" num="0" id="Column1" click={this.handleClick} spaceCounter={this.state.spaceId} currentPlayer={this.state.currentPlayer} key="0" column={this.state.matrix[0]}/> {/*right1 */}
